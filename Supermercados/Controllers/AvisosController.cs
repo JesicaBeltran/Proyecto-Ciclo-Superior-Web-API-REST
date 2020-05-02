@@ -61,12 +61,12 @@ namespace AvisoService.Controllers
          }*/
 
 
-       /*[HttpPost]
+       [HttpPost]
         [Route("AddAvisoItems")]
         public void AddAvisoItems(Aviso items)
         {
-           _avisoService.AddAvisoItems.AddAvisoItems(items);
+            _avisoService.AddAvisoItems(items);
 
-        }*/
+        }
     }
 }

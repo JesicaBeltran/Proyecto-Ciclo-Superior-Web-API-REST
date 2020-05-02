@@ -8,7 +8,9 @@ namespace AvisoRepository.Repository
 {
     public interface IAvisoRepository
     {
-        //Task<ActionResult<IEnumerable<Supermercado>>> GetSupermercadoItems();
         IEnumerable<Aviso> GetAvisoItems();
+       // void AddAvisoItems(Aviso items);
+        //Task<ActionResult<Aviso>> AddAvisoItems(Aviso items);
+        void AddAvisoItems(Aviso items);
     }
 }

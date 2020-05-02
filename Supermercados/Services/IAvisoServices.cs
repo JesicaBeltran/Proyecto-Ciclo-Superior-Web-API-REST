@@ -6,7 +6,7 @@ namespace AvisoServices.Services
 {
    public interface IAvisoServices
     {
-        //public void AddAvisoItems(Aviso items);
+        public void AddAvisoItems(Aviso items);
         IEnumerable<Aviso> GetAvisoItems();
     }
 }

@@ -23,9 +23,10 @@ namespace AvisoServices.Services
             return _avisoRepository.GetAvisoItems();
         }
 
-        /*public void AddAvisoItems(Aviso items)
+        public void AddAvisoItems(Aviso items)
         {
-           
-        }*/
+            _avisoRepository.AddAvisoItems(items);
+        }
+
     }
 }
