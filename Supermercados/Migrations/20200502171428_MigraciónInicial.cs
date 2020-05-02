@@ -2,7 +2,7 @@
 
 namespace Supermercados.Migrations
 {
-    public partial class firstMigration : Migration
+    public partial class MigraciónInicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,7 +21,13 @@ namespace Supermercados.Migrations
                 {
                     table.PrimaryKey("PK_AvisoItems", x => x.Id);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AvisoItems",
+                columns: new[] { "Id", "CodigoPostal", "Comentario", "Producto", "Supermercado" },
+                values: new object[] { 1, 21110, "No queda leche puleva", "leche", "Dia" });
         }
+
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Supermercados.Migrations
 {
     [DbContext(typeof(AvisoContexto))]
-    [Migration("20200430101625_firstMigration")]
-    partial class firstMigration
+    [Migration("20200502171428_MigraciónInicial")]
+    partial class MigraciónInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,6 +44,16 @@ namespace Supermercados.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AvisoItems");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CodigoPostal = 21110,
+                            Comentario = "No queda leche puleva",
+                            Producto = "leche",
+                            Supermercado = "Dia"
+                        });
                 });
 #pragma warning restore 612, 618
         }
