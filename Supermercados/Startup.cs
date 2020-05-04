@@ -13,6 +13,7 @@ namespace AvisoService
 {
     public class Startup
     {
+        //readonly string AllowSpecificOrigin = "_allowSpecificOrigin";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,14 +24,16 @@ namespace AvisoService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
+
+            services.AddCors();
+
             services.AddDbContext<AvisoContexto>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("ConexionTest")));
 
             services.AddControllers();
-
+           
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-          
+            //services.AddCors();
 
             services.AddScoped<IAvisoServices, AvisoServices.Services.AvisoServices>();
             services.AddScoped<IAvisoRepository, AvisoRepository.Repository.AvisoRepository>();
@@ -49,9 +52,11 @@ namespace AvisoService
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-
-           
+            app.UseCors(
+        options => options.WithOrigins("http://localhost:8100").AllowAnyMethod()
+    );
             app.UseMvc();
+           
 
         }
     }
