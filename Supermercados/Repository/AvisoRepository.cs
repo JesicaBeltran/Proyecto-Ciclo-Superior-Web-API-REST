@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using AvisoServices.Models;
+using System;
 
 namespace AvisoRepository.Repository
 {
@@ -18,16 +19,17 @@ namespace AvisoRepository.Repository
           
         }
 
-        /* public async Task<ActionResult<IEnumerable<Supermercado>>> GetSupermercadoItems()
-         {
-
-             return await _context.ToListAsync();
-         }*/
-
         public IEnumerable<Aviso> GetAvisoItems()
         {
             return _context.AvisoItems.ToList();
         }
+        public void AddAvisoItems(Aviso items)
+        {
+            _context.AvisoItems.Add(items);
+            _context.SaveChanges();
+
+        }
+
     }
     
 }

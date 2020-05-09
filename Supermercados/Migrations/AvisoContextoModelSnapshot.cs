@@ -42,6 +42,16 @@ namespace Supermercados.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AvisoItems");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CodigoPostal = 21110,
+                            Comentario = "No queda leche puleva",
+                            Producto = "leche",
+                            Supermercado = "Dia"
+                        });
                 });
 #pragma warning restore 612, 618
         }

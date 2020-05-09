@@ -21,7 +21,6 @@ namespace AvisoService.Controllers
         //peticion tipo get: api/GetSupermercadoItems
         [HttpGet]
         [Route("GetAvisoItems")]
-        [EnableCors("AllowOrigin")]
         
         public ActionResult<IEnumerable<Aviso>> GetAvisoItems()
         {
@@ -30,6 +29,20 @@ namespace AvisoService.Controllers
             if (!avisoItems.Equals(null))
             {
                 return avisoItems.ToList();
+            }
+            return NotFound();
+        }
+
+        [HttpGet("{palabraClave}")]
+        [Route("GetAvisoItemsBuscador/{palabraClave}")]
+
+        public ActionResult<IEnumerable<Aviso>> GetAvisoItemsBuscador(string palabraClave)
+        {
+            var avisoItemsBuscado = _avisoService.GetAvisoItemsBuscador(palabraClave);
+
+            if (!avisoItemsBuscado.Equals(null))
+            {
+                return avisoItemsBuscado.ToList();
             }
             return NotFound();
         }
@@ -48,25 +61,12 @@ namespace AvisoService.Controllers
 
         }*/
 
-        //Peticion tipo post: api/supermercados
-
-
-        /* public async Task<ActionResult<Supermercado>> PostSupermercadoItem(Supermercado item)
-         {
-             _acciones.SupermercadoItems.Add(item);
-             await _acciones.SaveChangesAsync();
-
-             return CreatedAtAction(nameof(GetSupermercadoItems), new { id = item.Id }, item);
-
-         }*/
-
-
-       /*[HttpPost]
+        [HttpPost]
         [Route("AddAvisoItems")]
         public void AddAvisoItems(Aviso items)
         {
-           _avisoService.AddAvisoItems.AddAvisoItems(items);
+            _avisoService.AddAvisoItems(items);
 
-        }*/
+        }
     }
 }
