@@ -34,6 +34,7 @@ namespace AvisoService.Controllers
             return NotFound();
         }
 
+<<<<<<< Updated upstream
         //Peticion tipo get: un solo registro api/supermercados/4
         /*[HttpGet("{id}")]
         public async Task<ActionResult<Supermercado>> GetSupermercadoItem(int id)
@@ -47,6 +48,34 @@ namespace AvisoService.Controllers
             return supermercadoItem;
 
         }*/
+=======
+        [HttpGet("{orden}")]
+        [Route("GetAvisoItemsOrden/{orden}")]
+
+        public ActionResult<IEnumerable<Aviso>> GetAvisoItemsOrden(string orden)
+        {
+            var avisoItemsOrden = _avisoService.GetAvisoItemsOrden(orden);
+            if (!avisoItemsOrden.Equals(null))
+            {
+                return avisoItemsOrden.ToList();
+            }
+            return NotFound();
+        }
+        [HttpGet("{palabraClave}")]
+        [Route("GetAvisoItemsBuscador/{palabraClave}")]
+
+        public ActionResult<IEnumerable<Aviso>> GetAvisoItemsBuscador(string palabraClave)
+        {
+            var avisoItemsBuscado = _avisoService.GetAvisoItemsBuscador(palabraClave);
+
+            if (!avisoItemsBuscado.Equals(null))
+            {
+                return avisoItemsBuscado.ToList();
+            }
+            return NotFound();
+        }
+
+>>>>>>> Stashed changes
 
         //Peticion tipo post: api/supermercados
 

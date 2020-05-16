@@ -28,6 +28,16 @@ namespace AvisoRepository.Repository
         {
             return _context.AvisoItems.ToList();
         }
+<<<<<<< Updated upstream
+=======
+        public void AddAvisoItems(Aviso items)
+        {
+            items.FechaCreacion = DateTime.Now;
+            _context.AvisoItems.Add(items);
+            _context.SaveChanges();
+        }
+        
+>>>>>>> Stashed changes
     }
     
 }

@@ -8,5 +8,10 @@ namespace AvisoServices.Services
     {
         //public void AddAvisoItems(Aviso items);
         IEnumerable<Aviso> GetAvisoItems();
+<<<<<<< Updated upstream
+=======
+        IEnumerable<Aviso> GetAvisoItemsBuscador(string palabraClave);
+        IEnumerable<Aviso> GetAvisoItemsOrden(string orden);
+>>>>>>> Stashed changes
     }
 }

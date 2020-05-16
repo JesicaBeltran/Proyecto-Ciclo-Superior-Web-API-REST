@@ -16,5 +16,6 @@ namespace AvisoServices.Models
         [Required]
         public string Producto { get; set; }
         public string Comentario { get; set; }
+        public DateTime FechaCreacion { get; set; }
     }
 }
