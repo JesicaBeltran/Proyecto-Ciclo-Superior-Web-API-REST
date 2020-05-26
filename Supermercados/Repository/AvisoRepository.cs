@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using AvisoServices.Models;
+using System;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using System.Web.Http.Controllers;
 
 namespace AvisoRepository.Repository
 {
@@ -18,16 +22,18 @@ namespace AvisoRepository.Repository
           
         }
 
-        /* public async Task<ActionResult<IEnumerable<Supermercado>>> GetSupermercadoItems()
-         {
-
-             return await _context.ToListAsync();
-         }*/
-
         public IEnumerable<Aviso> GetAvisoItems()
         {
             return _context.AvisoItems.ToList();
         }
+       
+        public async Task AddAvisoItems(Aviso items)
+        {
+            _context.AvisoItems.Add(items);
+            await _context.SaveChangesAsync();
+        }
+       
+
     }
     
 }

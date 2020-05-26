@@ -12,9 +12,10 @@ namespace AvisoServices.Models
         [Required]
         public string Supermercado { get; set; }
         [Required]
-        public int CodigoPostal { get; set; }
+        public string Localidad { get; set; }
         [Required]
         public string Producto { get; set; }
         public string Comentario { get; set; }
+        public DateTime FechaCreacion { get; set; }
     }
 }

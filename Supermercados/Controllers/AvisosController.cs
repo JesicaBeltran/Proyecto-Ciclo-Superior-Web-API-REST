@@ -4,6 +4,8 @@ using AvisoServices.Models;
 using AvisoServices.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using System.Threading.Tasks;
 
 namespace AvisoService.Controllers
 {
@@ -18,55 +20,78 @@ namespace AvisoService.Controllers
             _avisoService = avisoService;
         }
 
-        //peticion tipo get: api/GetSupermercadoItems
         [HttpGet]
         [Route("GetAvisoItems")]
-        [EnableCors("AllowOrigin")]
-        
-        public ActionResult<IEnumerable<Aviso>> GetAvisoItems()
+       public ActionResult<IEnumerable<Aviso>> GetAvisoItems()
         {
             var avisoItems = _avisoService.GetAvisoItems();
-            
-            if (!avisoItems.Equals(null))
+
+            if (avisoItems.Equals(null))
+             {
+                 
+                return NotFound();
+            }
+            return avisoItems.ToList();
+        }
+
+        [HttpGet]
+        [Route("GetAvisoSupermercado/{localidad}/{supermercado}")]
+        public ActionResult<IEnumerable<Aviso>> GetAvisoSupermercado(string localidad, string supermercado)
+        {
+            var avisoItems = _avisoService.GetAvisoSupermercado(localidad,supermercado);
+
+            if (avisoItems.Equals(null))
             {
-                return avisoItems.ToList();
+
+                return NotFound();
+            }
+            return avisoItems.ToList();
+        }
+
+        [HttpGet("{orden}")]
+        [Route("GetAvisoItemsOrden/{orden}")]
+
+        public ActionResult<IEnumerable<Aviso>> GetAvisoItemsOrden(string orden)
+        {
+            var avisoItemsOrden = _avisoService.GetAvisoItemsOrden(orden);
+            if (!avisoItemsOrden.Equals(null))
+            {
+                //estooo
+                return Ok(avisoItemsOrden.ToList());
+            }
+            return NotFound();
+        }
+        [HttpGet("{palabraClave}")]
+        [Route("GetAvisoItemsBuscador/{palabraClave}")]
+
+        public ActionResult<IEnumerable<Aviso>> GetAvisoItemsBuscador(string palabraClave)
+        {
+            var avisoItemsBuscado = _avisoService.GetAvisoItemsBuscador(palabraClave);
+
+            if (!avisoItemsBuscado.Equals(null))
+            {
+                return avisoItemsBuscado.ToList();
             }
             return NotFound();
         }
 
-        //Peticion tipo get: un solo registro api/supermercados/4
-        /*[HttpGet("{id}")]
-        public async Task<ActionResult<Supermercado>> GetSupermercadoItem(int id)
-        {
-            var supermercadoItem = await _acciones.SupermercadoItems.FindAsync(id);
-           
-            if (supermercadoItem == null)
-            {
-                return NotFound();
-            }
-            return supermercadoItem;
-
-        }*/
-
-        //Peticion tipo post: api/supermercados
-
-
-        /* public async Task<ActionResult<Supermercado>> PostSupermercadoItem(Supermercado item)
-         {
-             _acciones.SupermercadoItems.Add(item);
-             await _acciones.SaveChangesAsync();
-
-             return CreatedAtAction(nameof(GetSupermercadoItems), new { id = item.Id }, item);
-
-         }*/
-
-
-       /*[HttpPost]
+    
+      [HttpPost]
         [Route("AddAvisoItems")]
-        public void AddAvisoItems(Aviso items)
-        {
-           _avisoService.AddAvisoItems.AddAvisoItems(items);
-
-        }*/
+        public async Task<IActionResult> AddAvisoItems(Aviso items)
+         {
+            try
+            {
+                await _avisoService.AddAvisoItems(items);
+                return CreatedAtAction(nameof(GetAvisoItems), new { id = items.Id }, items);
+                //return Ok(items);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            
+         }
+       
     }
 }

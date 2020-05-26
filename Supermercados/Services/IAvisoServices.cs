@@ -1,12 +1,16 @@
 ﻿using AvisoServices.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AvisoServices.Services
 {
    public interface IAvisoServices
     {
-        //public void AddAvisoItems(Aviso items);
+        Task AddAvisoItems(Aviso items);
         IEnumerable<Aviso> GetAvisoItems();
+        IEnumerable<Aviso> GetAvisoSupermercado(string localidad, string supermercado);
+        IEnumerable<Aviso> GetAvisoItemsBuscador(string palabraClave);
+        IEnumerable<Aviso> GetAvisoItemsOrden(string orden);
     }
 }
