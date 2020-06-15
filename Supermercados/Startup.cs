@@ -8,6 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using AvisoRepository.Data;
 using AvisoServices.Services;
 using AvisoRepository.Repository;
+using EstadisticasServices.Services;
+using UbicacionServices.Services;
+using UbicacionRepository.Repository;
+using SupermercadosRepository.Repository;
+using SupermercadosServices.Services;
+using FiltrosServices.Services;
 
 namespace AvisoService
 {
@@ -17,27 +23,32 @@ namespace AvisoService
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
-            services.AddDbContext<AvisoContexto>(options =>
+
+            services.AddCors();
+
+            services.AddDbContext<FoodLackContexto>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("ConexionTest")));
 
             services.AddControllers();
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-          
-
-            services.AddScoped<IAvisoServices, AvisoServices.Services.AvisoServices>();
-            services.AddScoped<IAvisoRepository, AvisoRepository.Repository.AvisoRepository>();
-            services.AddMvc(option => option.EnableEndpointRouting = false);
             
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            
+            services.AddScoped<IAvisoServices, AvisoServices.Services.AvisoServices>();
+            services.AddScoped<IEstadisticasServices, EstadisticasServices.Services.EstadisticasServices>();
+            services.AddScoped<IUbicacionServices, UbicacionServices.Services.UbicacionServices>();
+            services.AddScoped<ISupermercadosServices, SupermercadosServices.Services.SupermercadosServices>();
+            services.AddScoped<IFiltrosServices, FiltrosServices.Services.FiltrosServices>();
+
+            services.AddScoped<IAvisoRepository, AvisoRepository.Repository.AvisoRepository>();
+            services.AddScoped<IUbicacionRepository, UbicacionRepository.Repository.UbicacionRepository>();
+            services.AddScoped<ISupermercadosRepository, SupermercadosRepository.Repository.SupermercadosRepository>();
+
+            services.AddMvc(option => option.EnableEndpointRouting = false);
+           
         }
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -48,11 +59,14 @@ namespace AvisoService
             {
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
-
            
-            app.UseMvc();
+            app.UseCors(
+            options => options.WithOrigins("http://localhost:8100").AllowAnyMethod().AllowAnyHeader()
+            );
 
+            app.UseMvc();
         }
     }
 }
