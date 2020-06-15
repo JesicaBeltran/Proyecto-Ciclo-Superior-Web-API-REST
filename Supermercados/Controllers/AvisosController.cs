@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using AvisoServices.Models;
 using AvisoServices.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System;
 
 namespace AvisoService.Controllers
 {
-    [Route("api/")]
+    [Route("api/avisos/")]
     [ApiController]
     public class AvisosController : ControllerBase
     {
@@ -18,55 +19,39 @@ namespace AvisoService.Controllers
             _avisoService = avisoService;
         }
 
-        //peticion tipo get: api/GetSupermercadoItems
         [HttpGet]
         [Route("GetAvisoItems")]
-        [EnableCors("AllowOrigin")]
-        
-        public ActionResult<IEnumerable<Aviso>> GetAvisoItems()
-        {
-            var avisoItems = _avisoService.GetAvisoItems();
-            
-            if (!avisoItems.Equals(null))
+        public async Task<IEnumerable<Aviso>> GetAvisoItems()
+          {
+            List<Aviso> result = null;
+            try
             {
+                var avisoItems = _avisoService.GetAvisoItems();
+                await Task.Delay(1000);
                 return avisoItems.ToList();
             }
-            return NotFound();
-        }
-
-        //Peticion tipo get: un solo registro api/supermercados/4
-        /*[HttpGet("{id}")]
-        public async Task<ActionResult<Supermercado>> GetSupermercadoItem(int id)
-        {
-            var supermercadoItem = await _acciones.SupermercadoItems.FindAsync(id);
-           
-            if (supermercadoItem == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                Console.WriteLine("No hay datos", ex);
+                BadRequest();
             }
-            return supermercadoItem;
+            return result;
+          }
 
-        }*/
-
-        //Peticion tipo post: api/supermercados
-
-
-        /* public async Task<ActionResult<Supermercado>> PostSupermercadoItem(Supermercado item)
-         {
-             _acciones.SupermercadoItems.Add(item);
-             await _acciones.SaveChangesAsync();
-
-             return CreatedAtAction(nameof(GetSupermercadoItems), new { id = item.Id }, item);
-
-         }*/
-
-
-       /*[HttpPost]
+        [HttpPost]
         [Route("AddAvisoItems")]
-        public void AddAvisoItems(Aviso items)
-        {
-           _avisoService.AddAvisoItems.AddAvisoItems(items);
-
-        }*/
+        public async Task<IActionResult> AddAvisoItems(Aviso items)
+         {
+            try
+            {
+                await _avisoService.AddAvisoItems(items);
+                return CreatedAtAction(nameof(GetAvisoItems), new { id = items.Id }, items);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            
+         }
     }
 }
