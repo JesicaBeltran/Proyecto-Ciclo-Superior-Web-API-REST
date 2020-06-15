@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AvisoRepository.Data;
+﻿using AvisoRepository.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
@@ -10,23 +8,19 @@ namespace AvisoRepository.Repository
 {
     public class AvisoRepository : IAvisoRepository
     {
-        private readonly AvisoContexto _context;
-
-        public AvisoRepository(AvisoContexto context)
+        private readonly FoodLackContexto _context;
+        public AvisoRepository(FoodLackContexto context)
         {
             _context = context;
-          
         }
-
-        /* public async Task<ActionResult<IEnumerable<Supermercado>>> GetSupermercadoItems()
-         {
-
-             return await _context.ToListAsync();
-         }*/
-
-        public IEnumerable<Aviso> GetAvisoItems()
+       public IEnumerable<Aviso> GetAvisoItems()
         {
-            return _context.AvisoItems.ToList();
+             return _context.AvisoItems.ToList();
+        }
+        public async Task AddAvisoItems(Aviso items)
+        {
+            _context.AvisoItems.Add(items);
+            await _context.SaveChangesAsync();
         }
     }
     
