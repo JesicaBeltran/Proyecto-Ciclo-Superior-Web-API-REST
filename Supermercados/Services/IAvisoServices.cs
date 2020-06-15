@@ -1,12 +1,12 @@
 ﻿using AvisoServices.Models;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AvisoServices.Services
 {
    public interface IAvisoServices
     {
-        //public void AddAvisoItems(Aviso items);
+        Task AddAvisoItems(Aviso items);
         IEnumerable<Aviso> GetAvisoItems();
     }
 }
